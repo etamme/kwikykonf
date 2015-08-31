@@ -18,7 +18,9 @@
     <script type="text/javascript">
       // get the environment set up before calling get user media
       SIP.WebRTC.isSupported();
-
+      var domain = '<%= domain %>';
+      var shared_user = '<%= shared_user %>';
+      var ws_uri ='<%= ws_uri %>';
       var conf, priv;
       var localVideo = document.querySelector('#local video');
       var remotes = document.querySelector('#remotes');
@@ -49,7 +51,9 @@
         remotes.appendChild(node);
         attachMediaStream(node, stream);
         return node;
-      }
+      
+
+}
 
       function removeRemote(node) {
         node.parentNode.removeChild(node);
@@ -62,7 +66,7 @@
         var options = {media: {stream: window.localStream}};
         attachMediaStream(localVideo, stream);
         // set up our private UA with private URI
-        priv = new SIP.UA({uri:'guest.' + room + '.' + Math.floor(Math.random() * 9999) + '@anon.example.com',trace_sip: true, wsServers: ['ws://example.com:8080'] }).
+        priv = new SIP.UA({uri:'guest.' + room + '.' + Math.floor(Math.random() * 9999) + '@' + domain, trace_sip: true, wsServers: [ws_uri] }).
           once('registered', function () {
             // send a request to the shared uri requesting all registered users to send you an invite (full mesh)
             priv.message(conf.configuration.uri, 'Invite me, please!');
@@ -85,7 +89,7 @@
           }).
           start();
         // set up our shared uri used to recieve join requests (and other things)
-        conf = new SIP.UA({uri: 'conf.' + room + '@anon.example.com',trace_sip: true, wsServers: ['ws://example.com:8080']}).
+        conf = new SIP.UA({uri: shared_user+'.' + room + '@' + domain, trace_sip: true, wsServers: [ws_uri]}).
           on('message', function (message) {
             // when we recieve a message to this shared uri, send an invite to the reqesting uri
             console.log('sending invite with localStream');

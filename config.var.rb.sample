@@ -1,0 +1,4 @@
+$erb_context    = binding
+domain          = 'example.com'
+shared_user     = 'conf'
+ws_uri          = 'ws://example.com:8080'
