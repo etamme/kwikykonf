@@ -80,7 +80,7 @@ button.off {
 
 #remotes video,
 #remotes canvas {
-  width: 45%;
+  //width: 45%;
   margin: 1em 1.5%;
   display: inline-block;
   border: 1px solid #666;
