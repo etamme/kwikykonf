@@ -49,15 +49,37 @@
       function resize_video() {
          var videos = document.getElementById("remotes").children;
          var num_remotes = videos.length;
-         var base_percent = 45.0;
-         var coefficient = 0.9;
-         var min_width = 15;
-         var divisor =  num_remotes * coefficient;
-         var width = Math.floor(base_percent/divisor);
+         var width=15;
 
-         if (width<min_width) {
-           width = min_width;
-         }
+        switch(num_remotes) {
+          case 1:
+            width=45;
+            break;
+          case 2:
+            width=45;
+            break;
+          case 3:
+            width=30;
+            break;
+          case 4:
+            width=20;
+            break;
+          case 5:
+            width=20;
+            break;
+          case 6:
+            width=20;
+            break;
+          case 7:
+            width=20;
+            break;
+          case 8:
+            width=20;
+            break;
+          default:
+            width=15;
+         } 
+
          width = width +'%';
 
          for (i = 0; i < videos.length; i++) {
